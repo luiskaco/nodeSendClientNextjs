@@ -3,3 +3,20 @@ npm install -g create-react-app
 
 // Solucion next 
 npm i create-next-app
+
+// Notas: Los componentes los escribimos siendo la primera letra en mayusculas.
+
+
+
+// Tailwing usado
+
+https://tailwindcss.com/docs/installation
+
+
+
+| Dependencia para validar formulario 
+  npm i formik yup
+
+  Nota: yup se usa para validar con el paquete formik
+
+https://formik.org/
