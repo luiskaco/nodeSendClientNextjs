@@ -1,0 +1,5 @@
+// SOlucionado probelma de react 
+npm install -g create-react-app
+
+// Solucion next 
+npm i create-next-app
