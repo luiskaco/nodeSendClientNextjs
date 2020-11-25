@@ -1,11 +1,25 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import Layout from '../components/Layout';
 // Importar formik
 import { useFormik} from 'formik';
 // Importar yup
 import * as Yup from 'yup';
 
-const Index = () => {
+// improtar context
+import authContext from '../context/auth/authContext';
+import Alertas from '../components/alertas';
+/**
+ * Nota: Al importar context, tenemos accesos a todas las variables y funciones que se esten enviando 
+ * por el state
+ * 
+ */
+
+const CrearCuenta = () => {
+
+    // Usamos el context  | acceder al state
+    const AuthContext = useContext(authContext);
+    // Extraer
+    const {registrarUsuario, mensaje} = AuthContext;
 
 
     // Formulario  y validacion con formik y yup
@@ -26,16 +40,19 @@ const Index = () => {
         }),
         // handle del submit
         onSubmit: valores => {
-            console.log(valores);
+            //console.log(valores);
+            registrarUsuario(valores);
         }
     });
 
   return ( 
       <Layout>
           <div className="md:w-4/5 xl:w-3/5 mx-auto mb-32">
-            <div className="text-4xl font-sans font-bold text-gray-800 text-center my-4">
+            <h2 className="text-4xl font-sans font-bold text-gray-800 text-center my-4">
                 Crear Cuenta
-            </div>
+            </h2>
+
+            { mensaje && <Alertas />  }
 
             <div className="flex justify-center mt-5">
                 <div className="w-full max-w-lg">
@@ -137,4 +154,4 @@ const Index = () => {
    );
 }
  
-export default Index;
+export default CrearCuenta;

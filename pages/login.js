@@ -5,7 +5,7 @@ import { useFormik} from 'formik';
 // Importar yup
 import * as Yup from 'yup';
 
-const Index = () => {
+const Login = () => {
     
     // Formulario  y validacion con formik y yup
 
@@ -30,9 +30,9 @@ const Index = () => {
   return ( 
     <Layout>
     <div className="md:w-4/5 xl:w-3/5 mx-auto mb-32">
-      <div className="text-4xl font-sans font-bold text-gray-800 text-center my-4">
+      <h2 className="text-4xl font-sans font-bold text-gray-800 text-center my-4">
          Iniciar Sesión
-      </div>
+      </h2>
 
       <div className="flex justify-center mt-5">
           <div className="w-full max-w-lg">
@@ -107,4 +107,4 @@ const Index = () => {
    );
 }
  
-export default Index;
+export default Login;

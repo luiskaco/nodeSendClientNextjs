@@ -20,3 +20,12 @@ https://tailwindcss.com/docs/installation
   Nota: yup se usa para validar con el paquete formik
 
 https://formik.org/
+
+
+| Dependencias para conectar asincronamente axios
+  npm i axios
+
+| Para definir variables de entorno se debe crear. 
+  next.config.js
+  
+
