@@ -23,7 +23,6 @@ const CrearCuenta = () => {
 
 
     // Formulario  y validacion con formik y yup
-
     const formik = useFormik({
         // Valores iniciales de los input
         initialValues : {

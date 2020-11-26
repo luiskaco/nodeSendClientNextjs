@@ -1,14 +1,42 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import Layout from '../components/Layout';
 // Importar formik
 import { useFormik} from 'formik';
 // Importar yup
 import * as Yup from 'yup';
 
+// importando context
+import authContext from '../context/auth/authContext';
+
+// IKmportando aleta
+import Alerta from '../components/alertas';
+
+// importando router de nextjs
+import {useRouter} from 'next/router';
+/**
+ * Nota: usamos next/router cuando se realiza de manera programada. haciendo uso del hook useROuter
+ */
+
 const Login = () => {
+    // Definir context
+    const AuthContext = useContext(authContext);
+    const {iniciarSession, mensaje, autenticado} = AuthContext;
+
+    // NExt Router
+    const router = useRouter();
+
+    // Uso de useEffect para verificar si esta autenticado el usuario
+    useEffect(() => {
+        if(autenticado){
+            router.push('/');
+        }
+        
+    }, [autenticado])
+
+
+
     
     // Formulario  y validacion con formik y yup
-
     const formik = useFormik({
         // Valores iniciales de los input
         initialValues : {
@@ -23,7 +51,9 @@ const Login = () => {
         }),
         // handle del submit
         onSubmit: valores => {
-            console.log(valores);
+            //console.log(valores);
+            // Enviar valores
+            iniciarSession(valores);
         }
     });
 
@@ -33,6 +63,7 @@ const Login = () => {
       <h2 className="text-4xl font-sans font-bold text-gray-800 text-center my-4">
          Iniciar Sesión
       </h2>
+      { mensaje && <Alerta /> }
 
       <div className="flex justify-center mt-5">
           <div className="w-full max-w-lg">

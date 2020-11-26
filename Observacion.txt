@@ -27,5 +27,35 @@ https://formik.org/
 
 | Para definir variables de entorno se debe crear. 
   next.config.js
+
+
+|  Con respecto al router
+
+  /importamos
+  import Link from 'next/link';
+
+  Nota: Se usa cuando hacemos uso de link 
+             
+    <Link href="/login" >
+            <a className="bg-red-500 px-5 py-3 rounded text-white font-bold uppercase mr-2">Iniciar Sesión</a>
+    </Link>
+
+| DE MANERA PROGRAMADA
+Nota: usamos next/router cuando se realiza de manera programada. haciendo uso del hook useROuter
+  
+  // improtamos
+  import {useRouter} from 'next/router';
+
+
+  // NExt Router
+    const router = useRouter();
+
+  // Uso de useEffect para verificar si esta autenticado el usuario
+    useEffect(() => {
+        if(autenticado){
+            router.push('/');
+        }
+        
+    }, [autenticado])
   
 

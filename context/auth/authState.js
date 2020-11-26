@@ -9,16 +9,31 @@ import {
         REGiSTRO_EXITOSO ,
         REGiSTRO_ERROR,
         LIMPIAR_ALERTA,
-        USUARIO_AUTENTICADO } from '../../type';
+        LOGIN_ERROR,
+        LOGIN_EXITOSO,
+        USUARIO_AUTENTICADO,
+        CERRAR_SESSION
+    } from '../../type';
 
 // importar Cliente Axios
 import clienteAxios from '../../config/axios';
+// importamos token Auth
+import tokenAuth from '../../config/tokenauth';
 
 const AuthState = ({children}) => {
 
+
+    /**
+     * Nota: el initalState se ejecuta tanto en el cliente como en el servidor. Por ser una aplicacion hibrida
+     * Se debe realizar comprobaciones para poder ejecutar ciertas acciones con algunos elementos del javaScripts.
+     * 
+     * En el servidor de express de nextjs no existe localStorage. Por eso se usa una comprobacion para poder 
+     * usarse localStorage en el cliente.
+     */
+
     // Definir el state inicial
     const inicialState = {
-        token:'', 
+        token: typeof window !== 'undefined' ? localStorage.getItem('react_token') : '', 
         autenticado:null, 
         usuario:null, 
         mensaje:null, 
@@ -53,35 +68,91 @@ const AuthState = ({children}) => {
 
             /*
                 nota: Para obtener los mensaje regresado por el codigo 400
-                se usa response
+                se usa response | error.response
             */
 
         }
 
-        // Limpiar alertas
-              setTimeout(() => {
-               
+         // Limpiar
+         limpiarMensaje();
+
+    }
+    // Autenticar Usuario
+
+    const iniciarSession = async datos => {
+        //console.log(datos);
+
+        try {
+            const respuesta = await clienteAxios.post('/api/auth',datos);
+            //console.log(respuesta.data.token);
+            dispatch({
+                type: LOGIN_EXITOSO,
+                payload: respuesta.data.token
+            });
+
+        } catch (error) {
+            // console.log(error.response.data.msg);    
+            dispatch({
+                type: LOGIN_ERROR,
+                payload: error.response.data.msg
+            });
+            /*
+                nota: Para obtener los mensaje regresado por el codigo 400
+                se usa response | error.response
+            */
+        }
+        // Limpiar
+        limpiarMensaje();
+    }
+
+    // Retorna el usuario autenticado en base al JWT
+    const usuarioAutenticado = async () => {
+        // console.log('Revisando...');
+        // Obteniendo el token localStorage
+        const token = localStorage.getItem('react_token');
+
+        if(token){
+            tokenAuth(token);
+
+            try {
+                const respuesta = await clienteAxios.get('/api/auth');
+                //console.log(respuesta);
+                dispatch({
+                    type: USUARIO_AUTENTICADO,
+                    payload: respuesta.data.usuario
+                })
+    
+            } catch (error) {
+                console.log(error);
+                dispatch({
+                    type: LOGIN_ERROR,
+                    payload: error.response.data.msg
+                });
+            }
+        }
+
+       
+        
+    }
+
+    // Cerrando Session 
+    const cerrarSesion =() => {
+       // console.log("cerrando session...");
+        dispatch({
+            type:CERRAR_SESSION
+        });
+    }
+
+    // LIMPLIEZA de MENSAJES
+    const limpiarMensaje = () =>{
+            // Limpiar alertas
+            setTimeout(() => {
+                    
                 dispatch({
                     type: LIMPIAR_ALERTA
                 });
 
             }, 3000);
-    }
-
-
-    // Usuario autenticado
-    const usuarioAutenticado = nombre => {
-        dispatch({
-            type:USUARIO_AUTENTICADO,
-            payload: nombre
-        })
-        /**
-         *  Nota: Siempre el dispacth lleva dos tipo los type y payload
-         * 
-         *  type: se encarga de evaluar lo que se quiere.
-         *  payload: Es el encargado de modificar el state.
-         * 
-         * / */
     }
 
 
@@ -96,7 +167,9 @@ const AuthState = ({children}) => {
                 mensaje:state.mensaje,
                 // Funciones
                 registrarUsuario,
-                usuarioAutenticado
+                iniciarSession,
+                usuarioAutenticado,
+                cerrarSesion
                
             }}
         >
