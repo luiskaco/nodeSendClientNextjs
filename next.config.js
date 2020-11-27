@@ -4,7 +4,10 @@ module.exports = {
     }
 }
 
-/*
+/*  
+
     Nota: next.config.js Con este archivo definos las variables de entorno
-    NOta: BackeURL tiene la direcion base del api
+    Nota: BackeURL tiene la direcion base del api
+    Nota: Se debe reiniciar el servidor.
+    
 */

@@ -57,5 +57,9 @@ Nota: usamos next/router cuando se realiza de manera programada. haciendo uso de
         }
         
     }, [autenticado])
+
+
+| Dropzone
+npm i react-dropzone
   
 
