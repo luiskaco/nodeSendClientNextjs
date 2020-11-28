@@ -2,7 +2,7 @@
 import { 
     REGiSTRO_EXITOSO ,
     REGiSTRO_ERROR,
-    LIMPIAR_ALERTA,
+    OCULTAR_ALERTA,
     LOGIN_ERROR,
     LOGIN_EXITOSO,
     USUARIO_AUTENTICADO,
@@ -48,7 +48,7 @@ export default (state, action) => {
                 token:null
             }
 
-        case LIMPIAR_ALERTA: 
+        case OCULTAR_ALERTA: 
             return {
                 ...state,
                 mensaje: null,

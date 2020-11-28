@@ -1,6 +1,11 @@
-import React, { useCallback} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {useDropzone} from 'react-dropzone';
-import clienteAxios from '../config/axios';
+import Spinner from './spinner';
+
+
+// Importando app context
+import appContext from '../context/app/appContext';
+
 
 /**
  *   useMemo
@@ -8,23 +13,29 @@ import clienteAxios from '../config/axios';
  * 
  */
 
- const Dropzone = () => {
+ const Dropzone = () => {   
+
+    // Extraer context
+    const AppContext = useContext(appContext);
+    const {mostrarAlerta, subitArchivo, crearEnlace, cargando} = AppContext;
+
+
+    /** DROPZONE ABAJO **/
 
     const onDropRejected = () => {
-        console.log("no se puede subir");
+       // console.log("no se puede subir");
+       mostrarAlerta("No se puede subir, el maximo permitido es de 1mb, obten una cuenta para subir archivos mas pesados.");
     }
 
     // Declaramos el valor inicial de useDropzone
     const onDropAccepted = useCallback( async (acceptedFiles) => {
-        console.log(acceptedFiles);
+        //console.log(acceptedFiles);
 
         // Crear un form-data
         const formData = new FormData();
         formData.append('archivo', acceptedFiles[0]);
 
-        //const resultado = await clienteAxios.post('/api/archivos', formData);
-        //console.log(resultado);
-
+        subitArchivo(formData, acceptedFiles[0].path);
     }, []);
 
     /**
@@ -38,7 +49,10 @@ import clienteAxios from '../config/axios';
       */
   
     // Extraer contenido del dropzone
-    const {getRootProps, getInputProps, isDragActive , acceptedFiles} = useDropzone({onDropAccepted, onDropRejected, maxSize: 1000000});
+    const {getRootProps, getInputProps, isDragActive , acceptedFiles} = useDropzone(
+        {   onDropAccepted, 
+            onDropRejected, 
+            maxSize: 1000000});
     
     /**
      *   nota: acceptedFiles crea los archivos que se subira. Es decir genera la data del archivo.
@@ -55,14 +69,6 @@ import clienteAxios from '../config/axios';
             <p className="text-sm text-gray-500">{ (archivo.size / Math.pow(1024, 2)).toFixed(2)} MB</p>
         </li>
     ) );
-
-    // Creando enlance
-    const crearEnlace = () =>{
-        console.log("creando el enlace");
-    }
-
-
-
 
      return ( 
         <div className="md:flex-1 mb-3 mx-2 mt-16 lg:mt-0 flex flex-col items-center justify-center border-dashed border-gray-400 border-2 bg-gray-100 px-4
@@ -84,13 +90,22 @@ import clienteAxios from '../config/axios';
                         <ul>
                             {archivos}
                         </ul>
-                        <button 
-                            type="button"
-                            className="bg-blue-700 w-full py-3 rounded-lg text-white my-10 hover:bg-blue-800"
-                            onClick={() => crearEnlace()}
-                        >
-                            Crear Enlace
-                        </button>
+
+                        { 
+                            cargando ? <p className="my-10 text-center text-gradient"><Spinner /></p>: 
+
+                            <button 
+                                type="button"
+                                className="bg-blue-700 w-full py-3 rounded-lg text-white my-10 hover:bg-blue-800"
+                                onClick={() => crearEnlace()}
+                            >
+                                Crear Enlace
+                            </button>
+                        
+
+                        }
+
+                        
                        
 
                     </div>

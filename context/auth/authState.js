@@ -8,7 +8,7 @@ import authReducer from './authReducer';
 import { 
         REGiSTRO_EXITOSO ,
         REGiSTRO_ERROR,
-        LIMPIAR_ALERTA,
+        OCULTAR_ALERTA,
         LOGIN_ERROR,
         LOGIN_EXITOSO,
         USUARIO_AUTENTICADO,
@@ -149,7 +149,7 @@ const AuthState = ({children}) => {
             setTimeout(() => {
                     
                 dispatch({
-                    type: LIMPIAR_ALERTA
+                    type: OCULTAR_ALERTA
                 });
 
             }, 3000);
