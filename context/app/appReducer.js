@@ -5,7 +5,8 @@ import {
     SUBIR_ARCHIVO_EXITO,
     SUBIR_ARCHIVO_ERROR,
     CREAR_ENLACE_EXITO,
-    CREAR_ENLACE_ERROR 
+    CREAR_ENLACE_ERROR,
+    LIMPIAR_STATE
 } from '../../type';
 
 export default (state, action) => {
@@ -46,6 +47,19 @@ export default (state, action) => {
             return {
                 ...state,
                 url: action.payload
+            }
+        }
+        case LIMPIAR_STATE:{
+            return {
+                ...state,
+                mensaje_archivo: null,
+                nombre:'',
+                nombre_original:'',
+                cargando: null, 
+                descargas:1,
+                password:'',
+                autor:null,
+                url: ''
             }
         }
         default:

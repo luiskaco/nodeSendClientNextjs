@@ -35,10 +35,12 @@ const Index = () => {
                       className="bg-red-500 hover:bg-gray-900 w-full p-2 text-white uppercase font-bold mt-10"
                      onClick={()=> navigator.clipboard.writeText(`${process.env.frontendURL}/enlaces/${url}`) }
                   >
+                    {
+                      // Revisar la documentacion de navigador
+                    }
                   Copiar Enlace
                 </button> 
               </>
-
             ) : 
             
             (   
@@ -58,10 +60,9 @@ const Index = () => {
                         <Link href="/crearcuenta">
                             <a className="text-red-500 font-bold text-lg hover:text-red-700">Crea una  cuenta para mayores beneficios</a>
                         </Link>
-                    </div>
+                      </div>
                   </div>
-
-                </>
+              </>
              )
             }
 

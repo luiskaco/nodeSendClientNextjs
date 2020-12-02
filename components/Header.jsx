@@ -1,6 +1,8 @@
 import React, {useContext, useEffect} from 'react'
 import Link from 'next/link';
 import authContext from '../context/auth/authContext';
+import appContext from  '../context/app/appContext';
+import {useRouter} from 'next/router';
 
 /**
  *  Nota: Media query en telwing
@@ -14,20 +16,35 @@ import authContext from '../context/auth/authContext';
   */
 
 const Header = () => {
+    // ROuter 
+    const router = useRouter();
 
     // Extraer el usuario autenticado del Storage | Verificar si un usuario ha iniciado session o no.
    const AuthContext = useContext(authContext);
    const {usuarioAutenticado, usuario, cerrarSesion} = AuthContext;
 
+    // Context de la Aplicación
+   const AppContext = useContext(appContext);
+   const { limpiarState } = AppContext;
+
     useEffect(() => {
         usuarioAutenticado();
     }, [])
 
+    // Enviando a la pantallaPrincipal
+    const redireccionar = () => {
+        router.push('/');
+        limpiarState();
+    }
+
     return ( 
         <header className="py-8 flex flex-col md:flex-row items-center justify-between">
-            <Link href="/" >
-                <img className="w-64 mb-8 md:mb-0" src="logo.svg" alt="logo"/>
-            </Link>
+           
+                <img 
+                onClick={() => redireccionar()}
+                className="w-64 mb-8 md:mb-0 cursor-pointer" src="/logo.svg" alt="logo"/>
+            
+          
            
             <div>
                 {

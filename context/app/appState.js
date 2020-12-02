@@ -10,7 +10,8 @@ import {
     SUBIR_ARCHIVO_EXITO,
     SUBIR_ARCHIVO_ERROR,
     CREAR_ENLACE_EXITO,
-    CREAR_ENLACE_ERROR
+    CREAR_ENLACE_ERROR,
+    LIMPIAR_STATE
 } from '../../type';
 
 const AppState = ({children}) => {
@@ -94,6 +95,14 @@ const AppState = ({children}) => {
         limpiarMensaje();
     }
 
+    // Limpiar State
+    const limpiarState = () => {
+        dispatch({
+            type: LIMPIAR_STATE
+        })
+    }
+
+
       // LIMPLIEZA de MENSAJES
     const limpiarMensaje = () =>{
         // Limpiar alertas
@@ -119,7 +128,8 @@ const AppState = ({children}) => {
                 url: state.url,
                 mostrarAlerta,
                 subitArchivo,
-                crearEnlace
+                crearEnlace,
+                limpiarState
             }}
         >
             {children}
