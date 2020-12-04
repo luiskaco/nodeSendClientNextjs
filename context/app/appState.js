@@ -11,7 +11,9 @@ import {
     SUBIR_ARCHIVO_ERROR,
     CREAR_ENLACE_EXITO,
     CREAR_ENLACE_ERROR,
-    LIMPIAR_STATE
+    LIMPIAR_STATE,
+    AGREGAR_PASSWORD,
+    AGREGAR_CANTIDAD_DESCARGA
 } from '../../type';
 
 const AppState = ({children}) => {
@@ -95,6 +97,24 @@ const AppState = ({children}) => {
         limpiarMensaje();
     }
 
+    // Agregar Password 
+    const agregarPassword = password => {
+        //console.log(password);
+        dispatch({
+            type: AGREGAR_PASSWORD,
+            payload: password
+        })
+    }
+
+    // agregar un numero de descarga
+    const agregarDescarga = cantidad => {
+        dispatch({
+            type: AGREGAR_CANTIDAD_DESCARGA,
+            payload: cantidad
+        })
+    }
+
+
     // Limpiar State
     const limpiarState = () => {
         dispatch({
@@ -129,7 +149,9 @@ const AppState = ({children}) => {
                 mostrarAlerta,
                 subitArchivo,
                 crearEnlace,
-                limpiarState
+                limpiarState,
+                agregarPassword,
+                agregarDescarga
             }}
         >
             {children}

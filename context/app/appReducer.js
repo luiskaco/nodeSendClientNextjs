@@ -6,7 +6,9 @@ import {
     SUBIR_ARCHIVO_ERROR,
     CREAR_ENLACE_EXITO,
     CREAR_ENLACE_ERROR,
-    LIMPIAR_STATE
+    LIMPIAR_STATE,
+    AGREGAR_PASSWORD,
+    AGREGAR_CANTIDAD_DESCARGA
 } from '../../type';
 
 export default (state, action) => {
@@ -62,6 +64,16 @@ export default (state, action) => {
                 url: ''
             }
         }
+        case AGREGAR_PASSWORD:
+            return {
+                ...state, 
+                password: action.payload
+            }
+        case AGREGAR_CANTIDAD_DESCARGA:
+            return {
+                ...state, 
+                descargas: action.payload
+            }
         default:
         return state;
     }

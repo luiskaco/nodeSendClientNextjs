@@ -2,9 +2,14 @@ import React, {useCallback, useContext} from 'react';
 import {useDropzone} from 'react-dropzone';
 import Spinner from './spinner';
 
+// improtando formulario
+import Formulario from './formulario';
 
 // Importando app context
 import appContext from '../context/app/appContext';
+
+// Importando auth context
+import authContext from '../context/auth/authContext';
 
 
 /**
@@ -15,10 +20,13 @@ import appContext from '../context/app/appContext';
 
  const Dropzone = () => {   
 
-    // Extraer context
+    // Extraer context app
     const AppContext = useContext(appContext);
     const {mostrarAlerta, subitArchivo, crearEnlace, cargando} = AppContext;
 
+    // Extraer context auth
+    const AuthContext = useContext(authContext);
+    const {usuario, autenticado} = AuthContext;
 
     /** DROPZONE ABAJO **/
 
@@ -91,6 +99,10 @@ import appContext from '../context/app/appContext';
                             {archivos}
                         </ul>
 
+                        {
+                            autenticado ? <Formulario /> : ""
+                        }
+
                         { 
                             cargando ? <p className="my-10 text-center text-gradient"><Spinner /></p>: 
 
@@ -104,9 +116,6 @@ import appContext from '../context/app/appContext';
                         
 
                         }
-
-                        
-                       
 
                     </div>
                     

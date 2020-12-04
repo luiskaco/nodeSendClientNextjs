@@ -63,3 +63,14 @@ Nota: usamos next/router cuando se realiza de manera programada. haciendo uso de
 npm i react-dropzone
   
 
+| Deploitmen en vercel
+npm i -g verce   
+
+instalar cli 
+
+| para subir escribmoes 
+  VC
+  1 primero paso : si al nombre,
+  2 segundo paso "Link to existing project" : No porque es proyecto nuevo
+  3 tercer paso: aceptar la locacion del proyecto
+  4 cuarto paso: want o override the sertiong: selecionamos no. 
